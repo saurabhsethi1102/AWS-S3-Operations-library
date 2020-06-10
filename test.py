@@ -3,7 +3,7 @@ import s3_operations as s3
 """
 Getting list of buckets
 """
-s3.listBuckets()
+# s3.listBuckets()
 """
 Creating bucket with default region: Asia Pacific (Mumbai)
 """
@@ -40,3 +40,19 @@ Delete file from bucket
 Deleting all files from bucket
 """
 # s3.delete_all("saurabh-sample1")
+"""
+Getting Bucket location
+"""
+# s3.get_bucket_location("saurabh-files")
+"""
+Getting Bucket Access Control List
+"""
+# s3.get_bucket_acl("saurabh-sample1")
+"""
+Getting Bucket Policy
+"""
+# s3.get_bucket_policy("saurabh-sample1")
+"""
+Setting Bucket Policy
+"""
+# s3.set_bucket_policy("saurabh-sample1")

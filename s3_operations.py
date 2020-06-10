@@ -1,4 +1,5 @@
 import os
+import json
 import boto3
 import botocore
 from botocore.exceptions import ClientError
@@ -137,5 +138,68 @@ def delete_all(bucket_name):
         for key in bucket.objects.all():
             key.delete()
         print("All Files deleted")
+    except ClientError as e:
+        print(e)
+
+"""
+Getting bucket location
+"""
+def get_bucket_location(bucket_name):
+    try:
+        s3=boto3.client('s3')
+        response = s3.get_bucket_location(
+            Bucket=bucket_name
+        )
+        print (response['LocationConstraint'])
+    except ClientError as e:
+        print(e)
+
+"""
+Getting bucket Access Control List'
+"""
+def get_bucket_acl(bucket_name):
+    try:
+        s3 = boto3.client('s3')
+        result = s3.get_bucket_acl(Bucket=bucket_name)
+        print(result)
+    except ClientError as e:
+        print(e)
+
+"""
+Getting bucket policy
+"""
+def get_bucket_policy(bucket_name):
+    try:
+        s3=boto3.client('s3')
+        result = s3.get_bucket_policy(Bucket=bucket_name)
+        print(result)
+    except ClientError as e:
+        print(e)
+
+"""
+Setting bucket policy
+"""
+def set_bucket_policy(bucket_name):
+    try:
+        s3=boto3.client('s3')
+        print("Please enter the followting info to set bucket policy")
+        version=input('Version: ')
+        sid=input('Sid: ')
+        effect=input('Effect: ')
+        principal=input('Principal: ')
+        action=input('Action: ')
+        bucket_policy={
+            'Version': version,
+            'Statement': [{
+                'Sid': sid,
+                'Effect': effect,
+                'Principal': principal,
+                'Action': [action],
+                'Resource' : "arn:aws:s3:::%s/*" %bucket_name
+            }]
+        }
+        bucket_policy=json.dumps(bucket_policy)
+        s3.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
+        print("Bucket Policy set successfull")
     except ClientError as e:
         print(e)
