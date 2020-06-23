@@ -97,8 +97,6 @@ def downloadFile(bucket_name, object_name, file_name):
     try:
         s3=boto3.resource('s3')
         s3.meta.client.download_file(bucket_name, object_name, file_name)
-        # with open(file_name, 'wb') as f:
-        #     s3.download_fileobj(bucket_name, object_name, f)
         print('File Downloaded Successfully')
     except ClientError as e:
         print(e)
@@ -155,7 +153,7 @@ def get_bucket_location(bucket_name):
         print(e)
 
 """
-Getting bucket Access Control List'
+Getting bucket Access Control List
 """
 def get_bucket_acl(bucket_name):
     try:
@@ -203,3 +201,24 @@ def set_bucket_policy(bucket_name):
         print("Bucket Policy set successfull")
     except ClientError as e:
         print(e)
+
+"""
+Getting object as torrent
+"""
+def get_file_as_torrent(bucket_name, file_name):
+    s3=boto3.client('s3')
+    response=s3.get_object_torrent(
+        Bucket = bucket_name,
+        Key = file_name,
+        RequestPayer = 'requester'
+    )
+    print (response)
+
+"""
+Getting object url
+"""
+def get_file_url(bucket_name, file_name):
+    s3 = boto3.client('s3')
+    location = s3.get_bucket_location(Bucket=bucket_name)['LocationConstraint']
+    url = "https://s3-%s.amazonaws.com/%s/%s" % (location, bucket_name, file_name)
+    print(url)

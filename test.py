@@ -55,4 +55,12 @@ Getting Bucket Policy
 """
 Setting Bucket Policy
 """
-# s3.set_bucket_policy("saurabh-sample1")
+# s3.set_bucket_policy("sAaurabh-sample1")
+"""
+Getting file as torrent
+"""
+# s3.get_file_as_torrent("saurabh-files", "MyPic2.png")
+"""
+Getting file url
+"""
+# s3.get_file_url("saurabh-files", "MyPic2.png")
