@@ -1,4 +1,4 @@
-# AWS Operations Library
+# AWS S3 bucket Operations Library
 This library is designed so that basic and most used AWS operations can be accessed from a one single module 
 
 # How to use
