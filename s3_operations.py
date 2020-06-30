@@ -23,7 +23,7 @@ class s3Operations:
     """
     Creating a new Bucket
     """
-    @classmethod
+    @staticmethod
     def createBucket(bucket_name, region="ap-south-1"):
         try:
             if region is None:
@@ -41,7 +41,7 @@ class s3Operations:
     """
     Delete bucket
     """
-    @classmethod
+    @staticmethod
     def deleteBucket(bucket_name):
         try:
             flag=0
@@ -70,8 +70,8 @@ class s3Operations:
     """
     Getting List of Items in a bucket
     """
-    @classmethod
-    def listItemsBucket(bucket_name):
+    @staticmethod
+    def listBucketItems(bucket_name):
         try:
             s3=boto3.resource('s3')
             bucket = s3.Bucket(bucket_name)
@@ -85,7 +85,7 @@ class s3Operations:
     """
     Uploading file to Bucket
     """
-    @classmethod
+    @staticmethod
     def uploadFile(file_name, bucket_name, object_name=None):
         s3=boto3.client('s3')
         # If S3 object_name was not specified, use file_name
@@ -100,7 +100,7 @@ class s3Operations:
     """
     Downlodind file from Bucket
     """
-    @classmethod
+    @staticmethod
     def downloadFile(bucket_name, object_name, file_name):
         try:
             s3=boto3.resource('s3')
@@ -112,7 +112,7 @@ class s3Operations:
     """
     Copy a file from one bucket to another
     """
-    @classmethod
+    @staticmethod
     def copyFile(source_bucket_name, dest_bucket_name, source_file, dest_file):
         try:
             s3=boto3.resource('s3')
@@ -126,7 +126,7 @@ class s3Operations:
     """
     Delete file from bucket
     """
-    @classmethod
+    @staticmethod
     def deleteFile(bucket_name, file_name):
         try:
             s3=boto3.resource('s3')
@@ -139,8 +139,8 @@ class s3Operations:
     """
     Deleting all files from bucket
     """
-    @classmethod
-    def delete_all(bucket_name):
+    @staticmethod
+    def delete_all_files(bucket_name):
         try:
             s3=boto3.resource('s3')
             bucket=s3.Bucket(bucket_name)
@@ -153,7 +153,7 @@ class s3Operations:
     """
     Getting bucket location
     """
-    @classmethod
+    @staticmethod
     def get_bucket_location(bucket_name):
         try:
             s3=boto3.client('s3')
@@ -167,7 +167,7 @@ class s3Operations:
     """
     Getting bucket Access Control List
     """
-    @classmethod
+    @staticmethod
     def get_bucket_acl(bucket_name):
         try:
             s3 = boto3.client('s3')
@@ -175,17 +175,17 @@ class s3Operations:
             print(result)
         except ClientError as e:
             print(e)
-    # """
-    # Getting bucket policy
-    # """
-    # @classmethod
-    # def get_bucket_policy(bucket_name):
-    #     try:
-    #         s3=boto3.client('s3')
-    #         result = s3.get_bucket_policy(Bucket=bucket_name)
-    #         print(result)
-    #     except ClientError as e:
-    #         print(e)
+    """
+    Getting bucket policy
+    """
+    @staticmethod
+    def get_bucket_policy(bucket_name):
+        try:
+            s3=boto3.client('s3')
+            result = s3.get_bucket_policy(Bucket=bucket_name)
+            print(result)
+        except ClientError as e:
+            print(e)
 
     # """
     # Setting bucket policy
@@ -219,7 +219,7 @@ class s3Operations:
     """
     Getting object as torrent
     """
-    @classmethod
+    @staticmethod
     def get_file_as_torrent(bucket_name, file_name):
         s3=boto3.client('s3')
         response=s3.get_object_torrent(
@@ -232,7 +232,7 @@ class s3Operations:
     """
     Getting object url
     """
-    @classmethod
+    @staticmethod
     def get_file_url(bucket_name, file_name):
         s3 = boto3.client('s3')
         location = s3.get_bucket_location(Bucket=bucket_name)['LocationConstraint']
